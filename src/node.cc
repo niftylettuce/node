@@ -1864,8 +1864,7 @@ struct ThreadInfo {
 static void RunIsolate(void* arg) {
   ThreadInfo* ti = reinterpret_cast<ThreadInfo*>(arg);
 
-  uv_loop_t* loop = uv_loop_new();
-  Isolate* isolate = Isolate::New(loop);
+  Isolate* isolate = Isolate::New();
 
   StartThread(isolate, ti->argc_, ti->argv_);
   delete ti;
@@ -2740,7 +2739,7 @@ int Start(int argc, char *argv[]) {
 
   // Create the main node::Isolate object
   node::Isolate::Initialize();
-  Isolate* isolate = node::Isolate::New(uv_default_loop());
+  Isolate* isolate = node::Isolate::New();
   StartThread(isolate, argc, argv);
   isolate->Dispose();
 
